@@ -10,38 +10,34 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 app.post('/webhook', (req, res) => {
-    for(event in req.body.events){
-        var text = event.message.text
-        var sender = event.source.userId
-        var replyToken = event.replyToken
-        console.log(text, sender, replyToken)
-        console.log(typeof sender, typeof text)
-        // console.log(req.body.events[0])
-        if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
-            sendText(sender, text)
-        } else {
-            sendText(sender, text)
-        }
-        res.sendStatus(200)
-    }
+  var text = req.body.events[0].message.text
+  var sender = req.body.events[0].source.userId
+  var replyToken = req.body.events[0].replyToken
+  console.log(text, sender, replyToken)
+  console.log(typeof sender, typeof text)
+  // console.log(req.body.events[0])
+  if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
+    sendText(sender, text)
+  }
+  res.sendStatus(200)
 })
 
 function sendText (sender, text) {
   let data = {
-    replyToken: replyToken,
+    to: sender,
     messages: [
       {
         type: 'text',
-        text: text
+        text: 'สวัสดีค่ะ เราเป็นผู้ช่วยปรึกษาด้านความรัก สำหรับหมามิ้น 💞'
       }
     ]
   }
   request({
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer G+HFk/HAQbXgJEmWSl1xzj89ii0y8lKusJD2ZiU1Y2mTKSg3s9zFs8PybOFb0tzHO2EGjavJWT/oYHwbgQ2rl/k8caRgJexhXnLu0d8//4wZ5ZRLzU7pNcKNNoCPlm2F+TIYuBuvhQjJqgLCsnpWjQdB04t89/1O/w1cDnyilFU='
+      'Authorization': 'Bearer G+HFk/HAQbXgJEmWSl1xzj89ii0y8lKusJD2ZiU1Y2mTKSg3s9zFs8PybOFb0tzHO2EGjavJWT/oYHwbgQ2rl/k8caRgJexhXnLu0d8//4wZ5ZRLzU7pNcKNNoCPlm2F+TIYuBuvhQjJqgLCsnpWjQdB04t89/1O/w1cDnyilFU=ISSUE'
     },
-    url: 'https://api.line.me/v2/bot/message/reply',
+    url: 'https://api.line.me/v2/bot/message/push',
     method: 'POST',
     body: data,
     json: true
