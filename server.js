@@ -18,6 +18,8 @@ app.post('/webhook', (req, res) => {
   // console.log(req.body.events[0])
   if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
     sendText(sender, text)
+  } else {
+    sendText(sender, text)
   }
   res.sendStatus(200)
 })
@@ -28,7 +30,7 @@ function sendText (sender, text) {
     messages: [
       {
         type: 'text',
-        text: 'สวัสดีค่ะ เราเป็นผู้ช่วยปรึกษาด้านความรัก สำหรับหมามิ้น 💞'
+        text: text
       }
     ]
   }
