@@ -13,6 +13,10 @@ app.get('/', function (req, res) {
 	res.send('Hello')
 })
 
+app.get('/test', (req, res) => {
+    res.send('test')
+})
+
 app.post('/webhook', (req, res) => {
     res.sendStatus(200)
 })
