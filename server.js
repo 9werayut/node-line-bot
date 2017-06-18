@@ -26,7 +26,7 @@ app.post('/webhook', (req, res) => {
 
 function sendText (sender, text) {
   let data = {
-    to: sender,
+    replyToken: replyToken,
     messages: [
       {
         type: 'text',
