@@ -21,7 +21,7 @@ app.post('/webhook', (req, res) => {
   }else{
     sendText(sender, text)
   }
-  res.sendStatus(200)
+  res.sendStatus(200);
 })
 
 function sendText (sender, text) {
