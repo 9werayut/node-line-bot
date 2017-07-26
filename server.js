@@ -17,7 +17,7 @@ app.post('/webhook', (req, res) => {
   console.log(typeof sender, typeof text)
   // console.log(req.body.events[0])
   if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
-    sendText(sender, text)
+    sendText(sender, text);
   }
   res.sendStatus(200);
 })
