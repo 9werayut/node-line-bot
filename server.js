@@ -19,8 +19,60 @@ app.post('/webhook', (req, res) => {
   if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
     sendText(sender, text);
   }
+  if(text === 'สภาพอากาศ') {
+    getWeather(sender);
+  }
   res.sendStatus(200);
 })
+
+function getWeather (sender) {
+  let data = {
+    to: sender,
+    messages: [
+      {
+        "type": "template",
+        "altText": "this is a buttons template",
+        "template": {
+            "type": "buttons",
+            "thumbnailImageUrl": "https://example.com/bot/images/image.jpg",
+            "title": "Menu",
+            "text": "Please select",
+            "actions": [
+                {
+                  "type": "postback",
+                  "label": "Buy",
+                  "data": "action=buy&itemid=123"
+                },
+                {
+                  "type": "postback",
+                  "label": "Add to cart",
+                  "data": "action=add&itemid=123"
+                },
+                {
+                  "type": "uri",
+                  "label": "View detail",
+                  "uri": "http://example.com/page/123"
+                }
+            ]
+        }
+      }
+    ]
+  }
+  request({
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer G+HFk/HAQbXgJEmWSl1xzj89ii0y8lKusJD2ZiU1Y2mTKSg3s9zFs8PybOFb0tzHO2EGjavJWT/oYHwbgQ2rl/k8caRgJexhXnLu0d8//4wZ5ZRLzU7pNcKNNoCPlm2F+TIYuBuvhQjJqgLCsnpWjQdB04t89/1O/w1cDnyilFU='
+    },
+    url: 'https://api.line.me/v2/bot/message/push',
+    method: 'POST',
+    body: data,
+    json: true
+  }, function (err, res, body) {
+    if (err) console.log('error')
+    if (res) console.log('success')
+    if (body) console.log(body)
+  })
+}
 
 function sendText (sender, text) {
   let data = {
