@@ -13,9 +13,10 @@ app.post('/webhook', (req, res) => {
   var text = req.body.events[0].message.text
   var sender = req.body.events[0].source.userId
   var replyToken = req.body.events[0].replyToken
-  console.log(text, sender, replyToken)
+  console.log("text: ", text, "sender: ", sender, "replyToken: ", replyToken)
   console.log(typeof sender, typeof text)
-  console.log(req.body.events[0])
+  console.log("req.body.events[0]: ", req.body.events[0])
+  console.log("req.body: ", req.body);
   if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
     sendText(sender, text);
   }
