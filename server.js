@@ -11,12 +11,18 @@ app.use(bodyParser.json())
 
 app.post('/webhook', (req, res) => {
   var text = req.body.events[0].message.text
+  var messageId = req.body.events[0].message.id
   var sender = req.body.events[0].source.userId
   var replyToken = req.body.events[0].replyToken
   console.log("text: ", text, "sender: ", sender, "replyToken: ", replyToken)
   console.log(typeof sender, typeof text)
   console.log("req.body.events[0]: ", req.body.events[0])
   console.log("req.body: ", req.body);
+
+
+  getContent(messageId);
+
+
   if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
     sendText(sender, text);
   }
@@ -59,6 +65,7 @@ function getWeather (sender) {
       }
     ]
   }
+
   request({
     headers: {
       'Content-Type': 'application/json',
@@ -67,6 +74,22 @@ function getWeather (sender) {
     url: 'https://api.line.me/v2/bot/message/push',
     method: 'POST',
     body: data,
+    json: true
+  }, function (err, res, body) {
+    if (err) console.log('error')
+    if (res) console.log('success')
+    if (body) console.log(body)
+  })
+}
+
+function getContent(messageId){
+  request({
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer G+HFk/HAQbXgJEmWSl1xzj89ii0y8lKusJD2ZiU1Y2mTKSg3s9zFs8PybOFb0tzHO2EGjavJWT/oYHwbgQ2rl/k8caRgJexhXnLu0d8//4wZ5ZRLzU7pNcKNNoCPlm2F+TIYuBuvhQjJqgLCsnpWjQdB04t89/1O/w1cDnyilFU='
+    },
+    url: 'https://api.line.me/v2/bot/message/'+messageId+'/content',
+    method: 'GET',
     json: true
   }, function (err, res, body) {
     if (err) console.log('error')
