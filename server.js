@@ -94,7 +94,7 @@ function getContent(messageId){
   }, function (err, res, body) {
     if (err) console.log('error')
     if (res) console.log('success')
-    if (body) console.log("Content: ", body)
+    if (body) console.log("Content: ", JSON.stringify(body))
   })
 }
 
